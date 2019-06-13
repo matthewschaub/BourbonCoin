@@ -2,11 +2,11 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
 
-const addUser = async  (newUser) => {
+const addUser = async (newUser) => {
 
 	User.findOne({ email: newUser.email }).then(user => {
 	    if (user) {
-	      throw'Email already exists';
+	      throw new Error('Email already exists');
 	    } else {
 	    	console.log(newUser);
 	      bcrypt.genSalt(10, (err, salt) => {
@@ -15,12 +15,10 @@ const addUser = async  (newUser) => {
 	          newUser.password = hash;
 	          newUser
 	            .save()
-	            .then(user => console.log(user));
+	            .then(user => console.log(user))
+	            .catch(err => console.log(err));
 	        });
 	      });
-
-
-	      return true;
 	  }
 	}); 
 }

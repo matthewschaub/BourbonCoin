@@ -2,23 +2,25 @@ const userService  = require( "../services/user.service.js" )
 const User = require('../models/User');
 const keys = require('../config/keys');
 const jwt = require('jsonwebtoken');
+const validateRegisterInput = require('../validation/register');
+const validateLoginInput = require('../validation/login');
 
-
-const createUser = async(req, res) => {
-
+const createUser = async (req, res) => {
+	const { errors, isValid } = validateRegisterInput(req.body);
 	try {
+		if (!isValid) {
+    	throw errors;;
+  	}
 		const newUser = new User({
-	        name: req.body.name,
-	        email: req.body.email,
-	        password: req.body.password
-	      });
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password
+    });
 
-		await userService.addUser(newUser)
-		res.sendStatus(201)
-
+		await userService.addUser(newUser);
+		res.sendStatus(201);
 	} catch (e) {
-		console.log(e.message)
-		res.sendStatus(500)
+		return res.status(400).json(e);
 	}
 	
 
