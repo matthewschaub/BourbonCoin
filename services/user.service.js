@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
+
 const addUser = async  (newUser) => {
 
 	User.findOne({ email: newUser.email }).then(user => {
@@ -24,8 +25,30 @@ const addUser = async  (newUser) => {
 	}); 
 }
 
+const getUser = async (existingUser) => {
+
+	User.findOne({ existingUser.email }).then(user => {
+    
+	    // Check for user
+	    if (!user) {
+	      throw 'User not found'
+	    }
+
+	    // Check Password
+	    bcrypt.compare(existingUser.password, user.password).then(isMatch => {
+	      if (isMatch) {
+	        // User Matched
+	        return user 
+
+	      } else {
+	        throw 'Invlaid Password';
+	      }
+	    });
+	});
+}
+
 
 	
 module.exports = {
-	addUser
+	addUser, getUser
 }
