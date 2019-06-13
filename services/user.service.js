@@ -27,7 +27,7 @@ const addUser = async  (newUser) => {
 
 const getUser = async (existingUser) => {
 
-	User.findOne({ existingUser.email }).then(user => {
+	User.findOne({ email: existingUser.email }).then(user => {
     
 	    // Check for user
 	    if (!user) {

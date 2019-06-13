@@ -1,6 +1,6 @@
 const userService  = require( "../services/user.service.js" )
 const User = require('../models/User');
-const keys = require('../../config/keys');
+const keys = require('../config/keys');
 const jwt = require('jsonwebtoken');
 
 
@@ -29,7 +29,6 @@ const loginUser = async(req,res) => {
 	try {
 		
 		const user = new User({
-			name: req.body.name,
 	        email: req.body.email,
 	        password: req.body.password
 		})
