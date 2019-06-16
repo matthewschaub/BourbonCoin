@@ -9,13 +9,18 @@ const createUser = async (req, res) => {
 	const { errors, isValid } = validateRegisterInput(req.body);
 	try {
 		if (!isValid) {
-    	throw errors;;
-  	}
+    		throw errors
+  		}
 		const newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password
-    });
+	      fname : req.body.fname, 
+	      lname: req.body.lname,
+	      email: req.body.email,
+	      password: req.body.password
+	    })
+
+	    if (req.body.phonenumber) {
+	    	newUser.phonenumber = req.body.phonenumber
+	    }
 
 		await userService.addUser(newUser);
 		res.sendStatus(201);
