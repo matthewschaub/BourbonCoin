@@ -1,17 +1,37 @@
 const mongoose = require('mongoose'); 
 const Schema = mongoose.Schema; 
 
+
+var AddressId = mongoose.Schema.Types.ObjectId;
+
 //Create Schema
 const UserSchema = new Schema({
-  name: { type: String, 
+  fname : {
+      type: String,
       required: true
   },
-  email: { type: String, 
+
+  lname : {
+      type: String,
       required: true
   },
-  password: { type: String, 
+  
+  email: { 
+      type: String, 
       required: true
   },
+
+  password: { 
+      type: String, 
+      required: true
+  },
+
+  publickey: String,
+
+  phonenumber : String,
+  
+  addressId :AddressId,
+
   /*avatar: { type: String, 
   },*/
   date: { type: Date, 
