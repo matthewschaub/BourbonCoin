@@ -6,6 +6,7 @@ const passport = require('passport');
 const auth = require('./routes/api/auth');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
+const tokens = require('./routes/api/tokens');
 
 const app = express();
 
@@ -34,7 +35,8 @@ app.get('/', (req,res) => res.send('Hello'));
 
 app.use('/api/auth', auth);
 app.use('/api/profile', profile); 
-app.use('/api/posts', posts);  
+app.use('/api/posts', posts);
+app.use('/api', tokens)  
 
 const port = process.env.PORT || 5000; 
 
