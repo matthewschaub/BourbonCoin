@@ -25,25 +25,9 @@ const addUser = async (newUser) => {
 
 const getUser = async (existingUser) => {
 
-	User.findOne({ email: existingUser.email }).then(user => {
-    
-	    // Check for user
-	    if (!user) {
-	      throw 'User not found'
-	    }
-
-	    // Check Password
-	    bcrypt.compare(existingUser.password, user.password).then(isMatch => {
-	      if (isMatch) {
-	        // User Matched
-	        return user 
-
-	      } else {
-	        throw 'Invlaid Password';
-	      }
-	    });
-	});
+	return User.findOne({ email: existingUser.email })
 }
+
 
 
 	
