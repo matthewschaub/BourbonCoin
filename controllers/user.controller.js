@@ -2,8 +2,9 @@ const userService  = require( "../services/user.service.js" )
 const User = require('../models/User');
 const keys = require('../config/keys');
 const jwt = require('jsonwebtoken');
-const validateRegisterInput = require('../validation/register');
-const validateLoginInput = require('../validation/login');
+const validateRegisterInput = require('../validation/register')
+const validateLoginInput = require('../validation/login')
+const bcrypt = require('bcryptjs')
 
 const createUser = async (req, res) => {
 	const { errors, isValid } = validateRegisterInput(req.body);
@@ -40,22 +41,46 @@ const loginUser = async(req,res) => {
 	        password: req.body.password
 		})
 
-		await userService.getUser(user)
+		
 
-		const payload = { id: user.id, name: user.name}; // Create JWT Payload
+		userService.getUser(user).then(existingUser => {
+			if(!existingUser){
+				return res.status(404).json({message: "User not Found"})		
+			} else {
 
-        // Sign Token
-        jwt.sign(
-          payload,
-          keys.secretOrKey,
-          { expiresIn: 3600 },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: 'Bearer ' + token
-            });
-          }
-        );
+				bcrypt.compare(user.password, existingUser.password).then(isMatch => {
+				      if (isMatch) {
+				        
+				        const payload = { id: existingUser.id, name: existingUser.name} // Create JWT Payload
+
+		        		// Sign Token
+				        jwt.sign(
+				          payload,
+				          keys.secretOrKey,
+				          { expiresIn: 3600 },
+				          (err, token) => {
+				            res.json({
+				              success: true,
+				              token: 'Bearer ' + token
+				            });
+				          }
+				        )
+
+				      } else {
+				        return res.status(400).json({message : "Invalid Password"})
+				      }
+				    }).catch(err =>  console.log(err))
+
+				
+			}
+		}).catch(err => {
+			console.log(err)
+			res.status(500).json({message: err})
+		})
+
+		
+
+		
 
 	} catch (e) {
 		console.log(e)
