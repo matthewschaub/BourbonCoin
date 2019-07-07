@@ -1,0 +1,17 @@
+image_name - The given name of the image
+volume_name - The given name of the volume
+container_name -  The given name of the container
+tag - optional tag for the container 
+
+#Command to build image
+docker build -t [image_name]:[tag] .
+
+
+#Command to build container
+docker run -d --name [container_name] -p 5432:5432 -v [volume_name]:/var/lib/postgresql/data [image_name]:[tag]
+
+#Connecting to database 
+psql -h localhost -d bourbon_db -U bourbon_app 
+
+#Run sql file to create schema
+\i tables_schema.sql
