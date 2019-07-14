@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const user = require('../models/user.js')
+
 
 
 const addUser = async (newUser) => {
@@ -29,8 +31,19 @@ const getUser = async (existingUser) => {
 }
 
 
-
+const  add = async (insert) => {
 	
+	return await user
+		.query()
+		.insert({
+			fname: insert.fname,
+			lname: insert.lname,
+			email: insert.email,
+			phonenumber: insert.phonenumber
+		})
+}
+
+
 module.exports = {
-	addUser, getUser
+	addUser, getUser, add
 }

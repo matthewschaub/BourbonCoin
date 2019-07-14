@@ -7,7 +7,7 @@ tag - optional tag for the container
 docker build -t [image_name]:[tag] .
 
 
-#Command to build container
+#Command to run container
 docker run -d --name [container_name] -p 5432:5432 -v [volume_name]:/var/lib/postgresql/data [image_name]:[tag]
 
 #Connecting to database 

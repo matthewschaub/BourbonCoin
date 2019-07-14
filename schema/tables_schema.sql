@@ -2,7 +2,7 @@
 USE bourbon_db;
 
 CREATE TABLE addresses(
-	id integer PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	address1 varchar(100) NOT NULL,
 	address2 varchar(100),
 	zipcode integer NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE addresses(
 
 
 CREATE TABLE users (
-	id integer PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	fname varchar(20) NOT NULL,
 	lname varchar(20) NOT NULL,
 	email varchar(20) UNIQUE NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE user_address (
 );
 
 CREATE TABLE bottles (
-	id integer PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	distillery varchar(20) NOT NULL,
 	product_name varchar(20) NOT NULL,
 	proof smallint NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE bottles (
 );
 
 CREATE TABLE tokens (
-	token_id bigint PRIMARY KEY,
+	token_id BIGSERIAL PRIMARY KEY,
 	bottle_id integer REFERENCES bottles ON DELETE CASCADE,
 	for_sale boolean DEFAULT TRUE
 );
