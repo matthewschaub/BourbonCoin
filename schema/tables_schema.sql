@@ -17,6 +17,7 @@ CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
 	fname varchar(20) NOT NULL,
 	lname varchar(20) NOT NULL,
+	password varchar(30) NOT NULL,
 	email varchar(20) UNIQUE NOT NULL,
 	publickey varchar(100),
 	phonenumber bigint

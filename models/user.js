@@ -15,6 +15,7 @@ class User extends Model {
 				fname: {type : "string"},
 				lname: {type : "string"},
 				email: {type : "string"},
+				password: {type : "string"},
 				publickey: {type : "string"},
 				phonenumber: {type : "integer"}
 
